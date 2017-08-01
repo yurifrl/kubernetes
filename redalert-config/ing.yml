@@ -1,0 +1,10 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: redalert
+  labels:
+    app: redalert
+spec:
+  backend:
+    serviceName: redalert
+    servicePort: 80

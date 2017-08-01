@@ -1,0 +1,26 @@
+FROM alpine
+
+# http://get.docker.com/builds/Linux/x86_64/docker-1.12.3.tgz
+ENV COMPACT_DOCKER ./vendor/docker-1.12.3.tgz
+# http://github.com/docker/machine/releases/download/v0.8.2/docker-machine-Linux-x86_64
+ENV COMPACT_DOCKER_MACHINE ./vendor/docker-machine-Linux-x86_64
+# https://github.com/fabric8io/gofabric8/releases/download/v0.4.64/gofabric8-linux-amd64
+ENV COMPACT_GOFABRIC8 ./vendor/gofabric8-linux-amd64
+# https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.zip
+ENV COMPACT_GOOGLE_CLOUD ./vendor/google-cloud-sdk.zip
+
+# Download docker
+ADD $COMPACT_DOCKER /tmp/docker
+RUN cp /tmp/docker/docker/docker /usr/local/bin
+RUN rm -rf /tmp/docker
+
+# Download docker machine
+ADD $COMPACT_DOCKER_MACHINE /bin/docker-machine
+RUN chmod +x /bin/docker-machine
+
+ADD $COMPACT_GOOGLE_CLOUD /tmp/google-cloud-sdk.zip
+RUN unzip /tmp/google-cloud-sdk.zip -d / && rm /tmp/google-cloud-sdk.zip
+
+ADD $COMPACT_GOFABRIC8 /usr/local/bin/gofabric8
+# RUN chmod +x gofabric8
+# RUN mv gofabric8 /usr/local/bin

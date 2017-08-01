@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: taiga-pg
+  labels:
+    name: taiga-pg
+spec:
+  # This gives external ip
+  # type: LoadBalancer
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    name: taiga-pg

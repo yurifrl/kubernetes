@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: prerender
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: prerender
+    spec:
+      containers:
+        - name: prerender
+          image: "lune/prerender"
+          ports:
+            - name: http
+              containerPort: 3000

@@ -1,0 +1,20 @@
+{
+  "name": "kafka-producer",
+  "version": "1.0.0",
+  "description": "Kafka producer",
+  "main": "index.js",
+  "dependencies": {
+    "promise": "*",
+    "prozess-uber": "*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "kafka"
+  ],
+  "author": "yurifrl@hotmail.com",
+  "license": "ISC"
+}

@@ -1,0 +1,20 @@
+version: '2'
+services:
+  gofabric8:
+    image: yurifl/gofabric8
+    build: .
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.test
+    working_dir: /current
+    ports:
+      - 80:80
+    volumes:
+      - ./:/current
+      - gofabric8-data:/.config
+      - gofabric8-data:/.kube
+      - gofabric8-data:/.kubecfg
+
+volumes:
+  gofabric8-data:
+    external: true

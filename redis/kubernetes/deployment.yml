@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cache
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cache
+    spec:
+      containers:
+        - name: cache
+          image: "redis:latest"
+          command: ["redis-server", "/usr/local/etc/redis/redis.conf", "--appendonly", "yes"]
+          resources:
+            limits:
+              cpu: 20m
+              memory: 1G
+            requests:
+              cpu: 20m
+              memory: 1G
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/local/etc/redis
+
+      volumes:
+        - name: config-volume
+          configMap:
+            name: cache-config

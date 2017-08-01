@@ -1,0 +1,5 @@
+dg kubectl get nodes --show-labels
+dg kubectl label nodes gke-integrators-1-default-pool-16c9d925-npac kind=<label>
+
+sed -i -- 's/<useSecurity>true<\/useSecurity>/<useSecurity>false<\/useSecurity>/g' ./test.xml
+

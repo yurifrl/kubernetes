@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: taiga-back
+  labels:
+    name: taiga-back
+spec:
+  replicas: 1
+  selector:
+    name: taiga-back
+  template:
+    metadata:
+      labels:
+        name: taiga-back
+    spec:
+      containers:
+        - name: taiga-back
+          image: htdvisser/taiga-back
+          ports:
+            - containerPort: 8000
+          env:
+            - name: HOSTNAME
+              value: 104.196.221.54
+            - name: DEBUG
+              value: 'True'
+            - name: SECRET_KEY
+              value: examplesecretkey
+            - name: EMAIL_USE_TLS
+              value: 'True'
+            - name: EMAIL_HOST
+              value: smtp.gmail.com
+            - name: EMAIL_PORT
+              value: '587'
+            - name: EMAIL_HOST_USER
+              value: yurifl03@gmail.com
+            - name: EMAIL_HOST_PASSWORD
+              value: ''
+            - name: POSTGRES_HOST
+              value: taiga-pg
+            - name: POSTGRES_PORT
+              value: '5432'
+            - name: POSTGRES_DB_NAME
+              value: taiga
+            - name: POSTGRES_USER
+              value: taiga
+            - name: POSTGRES_PASSWORD
+              value: taiga
+          volumeMounts:
+            - mountPath: /usr/local/taiga/media
+              name: media
+            - mountPath: /usr/local/taiga/static
+              name: static
+            - mountPath: /usr/local/taiga/logs
+              name: logs
+      volumes:
+        - name: media
+          gcePersistentDisk:
+            pdName: taiga-media-disk
+            fsType: ext4
+        - name: static
+          gcePersistentDisk:
+            pdName: taiga-static-disk
+            fsType: ext4
+        - name: logs
+          emptyDir: {}
+
+
+

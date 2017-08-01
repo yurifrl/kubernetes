@@ -1,0 +1,25 @@
+pipeline:
+  #
+  publish:
+    image: plugins/docker
+    privileged: true
+    registry: gcr.io
+    repo: yurifl/youtrack
+    tags:
+      - latest
+      - ${DRONE_TAG}
+    username: _json_key
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    when:
+      event: tag
+  #
+  deploy:
+    image: yurifl/drone-gke
+    pull: true
+    project: yourproject
+    zone: us-east1-d
+    cluster: tools
+    kubefile: kube/deploy.yml
+    when:
+      event: tag

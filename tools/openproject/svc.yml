@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openproject
+  labels:
+    app: openproject
+spec:
+  type: LoadBalancer
+  selector:
+    app: openproject
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http

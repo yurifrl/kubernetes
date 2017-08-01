@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tuleap
+  labels:
+    app: tuleap
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tuleap
+    spec:
+      containers:
+        - name: tuleap
+          image: enalean/tuleap-aio
+          ports:
+            - containerPort: 80
+          env:
+            - name: VIRTUAL_HOST
+              value: tuleap
+

@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redalert
+  labels:
+    app: redalert
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redalert
+    spec:
+      containers:
+        - name: redalert
+          image: jonog/redalert
+          command: ["/redalert", "--config_file", "/data/config.json"]
+          ports:
+            - containerPort: 8888
+          volumeMounts:
+            - name: config
+              mountPath: "/data"
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            # initialDelaySeconds: 15
+            # timeoutSeconds: 1
+      volumes:
+        - name: config
+          secret:
+            secretName: redalert-config

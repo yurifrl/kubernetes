@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: youtrack
+  labels:
+    app: youtrack
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: youtrack
+    spec:
+      containers:
+        - name: youtrack
+          image: "yurifl/youtrack"
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: youtrack-data
+              mountPath: /opt/youtrack/data/
+      volumes:
+        - name: youtrack-data
+          gcePersistentDisk:
+            pdName: youtrack-data
+            fsType: ext4

@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: openproject
+  labels:
+    app: openproject
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: openproject
+    spec:
+      containers:
+        - name: openproject
+          image: openproject/community:6.1
+          ports:
+            - containerPort: 80
+

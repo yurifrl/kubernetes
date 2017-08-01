@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker build -t producer .
+docker run --rm --link kafkadocker_zookeeper_1 --net kafkadocker_default producer

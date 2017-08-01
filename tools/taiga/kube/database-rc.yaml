@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: taiga-pg
+  labels:
+    name: taiga-pg
+spec:
+  replicas: 1
+  selector:
+    name: taiga-pg
+  template:
+    metadata:
+      labels:
+        name: taiga-pg
+    spec:
+      containers:
+        - name: taiga-pg
+          image: "postgres:9.6"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: taiga
+            - name: POSTGRES_USER
+              value: taiga
+            - name: POSTGRES_PASSWORD
+              value: taiga
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: data
+      volumes:
+        - name: data
+          gcePersistentDisk:
+            pdName: taiga-pg-disk
+            fsType: ext4
+

@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2016-03-30T21:14:38Z
+  name: drone-config
+  namespace: default
+data:
+
+  ################################
+  # Drone Server (master) Config #
+  ################################
+
+  server.debug.is.enabled: "true"
+
+  # You'll probably want to leave this alone, but you can point to external
+  # DB instances if you'd like: http://readme.drone.io/0.5/manage/database/
+  server.database.driver: sqlite3
+  server.database.config: /var/lib/drone/drone.sqlite
+
+  server.is.open: "true"
+  # CHANGEME: If you want to restrict access to a particular org, put the
+  # name here.
+  server.orgs.list: ""
+  # CHANGEME: Add your GitHub/Bitbucket/Gogs/etc username here. This is a
+  # comma-separated list of usernames who will have admin privs.
+  server.admin.list: yurifrl,gabrielcorado
+  server.admin.everyone.is.admin: "false"
+
+  # See http://readme.drone.io/0.5/manage/server/ for possible values here.
+  # For now, our demo is GitHub-only. Drone supports other remotes, we just
+  # haven't set the others up in here yet.
+  # CHANGEME: Substitute your Github OAuth application client ID and secret.
+  server.remote.github.is.enabled: "true"
+  server.remote.github.client.id: f9d2dd6a0133bbb67f54
+  server.remote.github.secret: b24a6b6789c0bb88679874fbac2d719b412a7ccd
+
+  server.remote.bitbucket.is.enabled: "true"
+  server.remote.bitbucket.client.id: 9mzVLuRsUujjsAFDbQ
+  server.remote.bitbucket.secret: ETQqcKZeemeNS5QnrEDsuubj9tGm6zVh
+
+  server.remote.gitlab.is.enabled: "true"
+  server.remote.gitlab.client.id: "4720c8c4a85cd889307fb56e8cc97009233dad2195181c7a631c5ee43e6c9e0d"
+  server.remote.gitlab.secret: "14663532ada1380cd566371862ad93b271f6164e7e3ce3c3e3321b63005b16bc"
+
+  ######################
+  # Drone Agent Config #
+  ######################
+
+  agent.debug.is.enabled: "true"
+  # CHANGEME: Change this to point to the same FQDN as proxy.fqdn above.
+  agent.drone.server.url: "ws://drone-server/ws/broker"
+  # agent.drone.server.url: "ws://35.185.12.236/ws/broker"

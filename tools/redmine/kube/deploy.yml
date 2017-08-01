@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redmine
+  labels:
+    app: redmine
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redmine
+    spec:
+      containers:
+        - name: mariadb
+          image: mariadb
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: redmine-db
+              mountPath: /var/lib/mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "yourpassowd"
+            - name: MYSQL_DATABASE
+              value: "redmine"
+        - name: redmine
+          image: "gcr.io/your-project/redmine:{{ .Tag }}"
+          ports:
+            - name: redmine
+              containerPort: 3000
+          volumeMounts:
+            - name: redmine-data
+              mountPath: /usr/src/redmine/files
+          env:
+            - name: DB_HOST
+              value: "127.0.0.1"
+            - name: DB_PASS
+              value: "yourpassword"
+      volumes:
+        - name: redmine-data
+          gcePersistentDisk:
+            pdName: redmine-data
+            fsType: ext4
+        - name: redmine-db
+          gcePersistentDisk:
+            pdName: redmine-db
+            fsType: ext4

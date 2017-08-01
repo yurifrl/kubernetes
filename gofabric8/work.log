@@ -1,0 +1,9 @@
+# Usefull
+http://stackoverflow.com/questions/38086144/fabric8-on-gke-via-gofabric8-no-ingress-or-credentials
+http://fabric8.io/guide/getStarted/gke.html
+
+# Not so much
+https://fabric8.io/guide/getStarted/kubernetes.html
+https://github.com/nginxinc/kubernetes-ingress/issues/34
+https://github.com/fabric8io/fabric8/issues/5659
+https://github.com/fabric8io/gofabric8/issues/42

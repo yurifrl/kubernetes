@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: geminabox
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: geminabox
+    spec:
+      containers:
+        - name: geminabox
+          image: "yurifl/geminabox:latest"
+          ports:
+            - containerPort: 9292
+          volumeMounts:
+            - mountPath: /data
+              name: geminabox
+          env:
+            - name: GEMBOX_USER
+              value: admin
+            - name: GEMBOX_PASSWORD
+              value: <change>
+
+      volumes:
+        - name: geminabox
+          gcePersistentDisk:
+            pdName: geminabox
+            fsType: ext4

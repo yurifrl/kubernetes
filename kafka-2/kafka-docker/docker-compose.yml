@@ -1,0 +1,41 @@
+version: '2'
+services:
+  offset-monitor:
+    image: akursar/kafkaoffsetmonitor
+    ports:
+      - "8080:8080"
+    links:
+      - zookeeper
+      - kafka
+    env_file:
+        - ./secrets/development.env
+  manager:
+    image: sheepkiller/kafka-manager
+    ports:
+      - "9000:9000"
+    links:
+      - zookeeper
+      - kafka
+    env_file:
+        - ./secrets/development.env
+    environment:
+      APPLICATION_SECRET: letmein
+  kafka:
+    build: .
+    links:
+      - zookeeper
+    ports:
+      - "9092"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.1
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    env_file:
+        - ./secrets/development.env
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+

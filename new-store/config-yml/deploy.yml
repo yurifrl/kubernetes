@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "#NAME"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "#NAME"
+    spec:
+      containers:
+        - name: "#NAME"
+          image: "yurifl/demo:latest"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx","-s","quit"]
+          volumeMounts:
+            - name: "nginx-conf"
+              mountPath: "/etc/nginx/conf.d"
+            - name: "tls-#NAME-certs"
+              mountPath: "/etc/tls"
+      volumes:
+        # this already exists, and i has to be created
+        - name: "nginx-conf"
+          configMap:
+            name: "nginx-conf"
+            items:
+              - key: "proxy.conf"
+                path: "proxy.conf"
+        - name: "tls-#NAME-certs"
+          secret:
+            secretName: "tls-#NAME-certs"
